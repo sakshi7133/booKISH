@@ -140,38 +140,50 @@ function Navbar() {
         alt="logo"/>
         <a className="text-2xl h-10 mt-3 me-4 text-black font-bold cursor-pointer">booKISH!</a>
         </div>
-        <div className='navbar-end md:flex '>
-           <div className="dropdown">
+         
+         {/*navabar for small devices*/}
+
+        <div className='navbar-end ml-6 md:flex'>
+           <div className="dropdown ">
              <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
              </div>
-              <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <ul tabIndex={0} className="menu menu-sm dropdown-content text-black font-medium mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                 {links.map((items,i)=>(
                   <div>
                       {items.title==="Profile" || items.title==="Admin Profile" ? (
-                      <Link to={items.link} className=' hover:text-blue-500  transition-all duration-300' key={i}>
+                      <Link to={items.link} className='bg-cyan-400 text-white px-1 rounded-md border hover:bg-cyan-800 duration-300' key={i}>
                           {items.title}
                       </Link>) : (
-                      <Link to={items.link} className='hover:text-blue-500 transition-all duration-300' key={i}>
+                      <Link to={items.link} className='' key={i}>
                           {items.title}{" "}
                       </Link>)}
                   </div>
                  ))}
               </ul>
            </div>
+           {/*navbar for medium devices*/}
            <div className='hidden md:flex text-black semibold gap-4'>
-          {links.map((items,i)=>(
-            <Link to={items.link} className='hover:text-blue-500 transition-all duration-300'
-            key={i}>
-              {items.title}{' '}
-            </Link>
+               {links.map((items,i)=>(
+                 <div>
+                  {items.title==="Profile" || items.title==="Admin Profile" ?(  
+                   <Link to={items.link} className='bg-cyan-400 text-white px-3 py-2 rounded-md border hover:bg-cyan-800 duration-300 cursor-pointer'
+                   key={i}>
+                   {items.title}{' '}
+                   </Link>) : ( 
+                   <Link to={items.link} className='hover:text-blue-500 transition-all duration-300'
+                   key={i}>
+                  {items.title}{' '}
+                  </Link>)}
+                </div>
+         
           ))}
            </div>
            
            {isLoggedIn=== false &&(
             <>
             <div className="  md:flex gap-4 px-4">
-            <a className="bg:black text-white px-3 py-2 rounded-md border hover: bg-cyan-400 duration-300 cursor-pointer" onClick={() => document.getElementById("my_modal_3").showModal()}>Login</a>
+            <a className="bg-cyan-400 text-white px-3 py-2 rounded-md border hover:bg-cyan-800 duration-300 cursor-pointer" onClick={() => document.getElementById("my_modal_3").showModal()}>Login</a>
             <Login />
             </div>
             </>

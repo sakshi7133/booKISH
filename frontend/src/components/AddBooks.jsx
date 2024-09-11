@@ -49,10 +49,10 @@ const AddBooks = () => {
     };
   return (
     <div className='h-[100%] p-0 md:p-10'>
-        <h1 className='text-3xl md:text-5xl font-semibold text-zinc-500 mb-8'>
-            Add BOOk
+        <h1 className='text-3xl md:text-5xl font-semibold text-zinc-500 mb-1'>
+            Add Book
         </h1>
-        <div className='p-4  bg-zinc-300 rounded'>
+        <div className='p-4 bg-zinc-300 rounded'>
             <div>
                 <label htmlFor="" className='text-black font-semibold'>
                     Image

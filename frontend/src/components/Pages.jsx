@@ -25,13 +25,13 @@ const headers={
     </h2>
     <div className="card-actions flex justify-between">
     <p className="mt-2 text-black font-semibold">by {data.author}</p>
-    <div className="mt-2 badge badge-outline">{data.price}</div> 
+    <div className="mt-2 bg-pink-400 text-white rounded-md hover:bg-pink-800 duration-300 badge badge-outline">{data.price}</div> 
     </div>
     </div>
     </div></div></div></div>
     </Link>
     {favourite && (
-    <button className='bg-cyan-300  px-2 py-1 rounded border border-cyan- text-black ' onClick={handleRemoveBook}>Remove From Favourites</button>
+    <button className='bg-cyan-300 hover:bg-cyan-600  duration-300 px-5 py-1 rounded border border-cyan- text-black ' onClick={handleRemoveBook}>Remove From Favourites</button>
     )}
     </div>
   )

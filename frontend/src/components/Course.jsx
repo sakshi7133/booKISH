@@ -26,7 +26,7 @@ function Course() {
         We're delighted to have you{" "}
         <span className='text-cyan-400'> Here! :)</span>
       </h1>
-      <p className='mt-6'>cfxd fdjugku gdxy fcju. cjyg gfyugl mhtfku fcy</p>
+      <p className='mt-6 '>Browse our diverse collection of books to find your next great read.</p>
       </div> 
       <div className='mt-8 grid grid-cols-1 md:grid-cols-4'>
         

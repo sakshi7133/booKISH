@@ -16,20 +16,17 @@ function contact() {
       </div></Link>
       <div className=" center justify-center py-2 text-center">
       <h1 className="text-2xl font semibold md:text-4xl">
-        We're delighted to have you{" "}
-        <span className='text-cyan-400'> Here! :)</span>
+      Thank you for reaching out to{" "}
+        <span className='text-cyan-400'> booKISH! :)</span>
       </h1>
-      <p className='mt-6'>cfxd fdjugku gdxy fcju. cjyg gfyugl mhtfku fcy</p>
+      <p className='mt-6'>We’d love to hear from you! Whether you have questions, feedback, or just want to say hello,<br/> feel free to reach out to us:</p>
       </div> 
       <div className='flex py-10 items-center justify-center '>
     <div id="my_modal_3" className="border-[2px]  p-5  rounded-md shadow-md">
     <div className="">
         <form onSubmit={handleSubmit(onSubmit)} method="dialog">
-        {/* if there is a button in form, it will close the modal */}
-        <Link
-        to="/"
-        className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'
-        onClick={()=>document.getElementById("my_modal_3").close()}>✕</Link>
+        
+       
         
         <h3 className="font-bold text-lg">Contact</h3>
         <div className='mt-4 space-y-2'>
