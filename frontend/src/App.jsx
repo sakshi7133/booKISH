@@ -13,6 +13,9 @@ import ViewBookDetails from './viewBookDetails/ViewBookDetails';
 import Settings from './components/settings';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from './store/auth';
+import AllOrders from './components/AllOrders';
+import AddBooks from './components/AddBooks';
+import Updatebook from './components/updatebook';
 
 
 function App() {
@@ -37,13 +40,15 @@ function App() {
     <Route path="/course" element={<Courses/>}/>
     <Route path="/Signup" element={<Signup/>}/>
     <Route path="/profile" element={<Profile/>}>
-    <Route index element={<Favourites/>}/>
+     {role==="user" ? <Route index element={<Favourites/>}/> : <Route index element={<AllOrders/>}/>}
+     {role==="admin" && <Route path="/profile/add-book" element={<AddBooks/>}/>}
     <Route path="/profile/orderHistory" element={<UserOrderHistory/>}/>
     <Route path="/profile/settings" element={<Settings/>}/>
     </Route>
     <Route path="/cart" element={<Cart/>}/>
     <Route path="/contact" element={<Contact/>}/>
     <Route path="/about" element={<About/>}/>
+    <Route path="/updatebook/:id" element={<Updatebook/>}/>
    
     <Route path="view-book-details/:id" element={<ViewBookDetails/>}/>
     </Routes>

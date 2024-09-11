@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GrLanguage } from "react-icons/gr";
 import {FaShoppingCart} from "react-icons/fa";
 import {FaHeart} from "react-icons/fa"
 import {FaEdit} from "react-icons/fa"
 import {MdOutlineDelete} from "react-icons/md"
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 
   const viewBookDetails=()=>{
@@ -15,6 +17,7 @@ import { useSelector } from 'react-redux';
   const [Data,setData]=useState();
   const isLoggedIn=useSelector((state)=> state.auth.isLoggedIn);
   const role=useSelector((state)=> state.auth.role);
+  const navigate=useNavigate();
   console.log(isLoggedIn);
   console.log(role);
     useEffect(()=>{
@@ -25,6 +28,7 @@ import { useSelector } from 'react-redux';
       };
       fetch();
     },[]);
+   
     const headers={
       id:localStorage.getItem("id"),
       authorization:`Bearer ${localStorage.getItem("token")}`,
@@ -38,6 +42,11 @@ import { useSelector } from 'react-redux';
       const response=await axios.put("http://localhost:4001/api/v1/add-book-to-cart",{},{headers});
      alert(response.data.message);
     }
+    const deletebook=async()=>{
+      const response=await axios.delete("http://localhost:4001/api/v1/delete-book",{headers});
+      alert(response.data.message);
+      navigate("/course");
+    };
     
   
   return (
@@ -53,8 +62,10 @@ import { useSelector } from 'react-redux';
         </div>)}
         
         {isLoggedIn=== true && role==="admin" &&  ( <div className='flex justify-between lg:justify-start  mt-8 lg:mt-0  lg:flex-col '>
-          <button className='bg-white rounded-full mt-5 mx-5 text-3xl p-2 text-red-500'><FaEdit/></button>
-          <button className='bg-white rounded-full mt-5 mx-5 text-3xl p-2 text-blue-500'><MdOutlineDelete/></button>
+          <Link to={`/updatebook/${id}`} className='bg-white rounded-full mt-5 mx-5 text-3xl p-2 text-red-500'><FaEdit/></Link>
+          <button className='bg-white rounded-full mt-5 mx-5 text-3xl p-2 text-blue-500'
+          onClick={deletebook}>
+          <MdOutlineDelete/></button>
         </div>)}
         </div>
         <div className='p-1 md:my-20  md:mt-12 w-full lg:w-3/6'>

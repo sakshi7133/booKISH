@@ -43,7 +43,7 @@ function Navbar() {
       link: "/",
     },
     {
-      title:"Course",
+      title:"All Books",
       link:"/course",
     },
     {
@@ -61,16 +61,33 @@ function Navbar() {
     {
       title:"Profile",
       link:"/profile",
+    },
+    {
+      title:"Admin Profile",
+      link:"/profile",
     }
     
 
 ];
 
   const isLoggedIn=useSelector((state)=>state.auth.isLoggedIn);
+  const role=useSelector((state)=>state.auth.role);
   if(isLoggedIn===false)
   {
     links.splice(4,4);
   }
+  if(isLoggedIn===true && role=== "admin")
+    {
+      links.splice(5,1);
+      links.splice(3,1);
+      links.splice(3,1);
+      links.splice(2,1);
+
+    }
+    if(isLoggedIn===true && role=== "user")
+      {
+        links.splice(6,1);
+      }
   /*
   return (
     <>
@@ -131,8 +148,8 @@ function Navbar() {
               <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                 {links.map((items,i)=>(
                   <div>
-                      {items.title==="Profile" ? (
-                      <Link to={items.link} className='hover:text-blue-500 border border-blue-500 transition-all duration-300' key={i}>
+                      {items.title==="Profile" || items.title==="Admin Profile" ? (
+                      <Link to={items.link} className=' hover:text-blue-500  transition-all duration-300' key={i}>
                           {items.title}
                       </Link>) : (
                       <Link to={items.link} className='hover:text-blue-500 transition-all duration-300' key={i}>

@@ -84,7 +84,7 @@ router.get("/get-all-orders",authenticateToken,async(req,res)=>{
 
 
 //update order ----admin
-router.put("/updateOrder",authenticateToken,async(req,res)=>{
+router.put("/updateOrder/:id",authenticateToken,async(req,res)=>{
     try{
         const{id}=req.params;
         await Order.findByIdAndUpdate(id,{status:req.body.status});
