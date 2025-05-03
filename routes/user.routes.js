@@ -75,10 +75,15 @@ router.post("/login",async(req,res)=>{
                     {name:existingUser.username},
                     {role:existingUser.role},
                 ];
-                const token=jwt.sign({authClaims},"bookstore123",{expiresIn:"30d"});
-                res.status(200).json({id:existingUser._id,
+               // const token=jwt.sign({authClaims},"bookstore123",{expiresIn:"30d"});
+               const token = jwt.sign({ userId: existingUser._id, role: existingUser.role }, "bookstore123", { expiresIn: "1h" });
+               const refreshToken = jwt.sign({ userId: existingUser._id, role: existingUser.role }, "bookstore_refresh_secret", { expiresIn: "7d" });
+               // Set refresh token in http-only cookie
+               res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true, maxAge: 7 * 24 * 60 * 60 * 1000 }); // Secure cookie
+               res.status(200).json({id:existingUser._id,
                     role:existingUser.role,
                     token:token,
+
                 });
             }
             else{
@@ -93,6 +98,29 @@ router.post("/login",async(req,res)=>{
         throw error;
     }
 });
+
+
+// Refresh token
+router.post("/refresh-token", (req, res) => {
+    const refreshToken = req.cookies.refreshToken; // Get the refresh token from the cookie
+  
+    if (!refreshToken) {
+      return res.status(401).json({ message: "Refresh token is required" });
+    }
+  
+    jwt.verify(refreshToken, "bookstore_refresh_secret", (err, user) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid or expired refresh token" });
+      }
+  
+      // Create a new access token
+      const token = jwt.sign({ userId: user.userId, role: user.role }, "bookstore123", { expiresIn: "1h" });
+  
+      return res.json({ token });
+    });
+  });
+  
+
 
 //get user info
 
