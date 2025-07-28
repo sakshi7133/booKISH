@@ -4,9 +4,6 @@
 
 This is a full-stack **Bookshop Automation Software** built using the MERN stack (MongoDB, Express, React, Node.js). The software automates the management of books, orders, and users, providing a seamless experience for both administrators and customers. The system includes secure user authentication, an admin panel for managing inventory and orders, and a user-friendly interface for customers to explore and purchase books.
 
-### Live Demo
-You can view the live demo of the project here: [Netlify Live Demo](https://dashing-licorice-22d30e.netlify.app/)
-
 ---
 
 ## Features
