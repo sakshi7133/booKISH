@@ -59,6 +59,7 @@ router.post("/signup",async(req,res)=>{
     }
 });
 
+
 //login
 router.post("/login",async(req,res)=>{
     try{
@@ -66,35 +67,35 @@ router.post("/login",async(req,res)=>{
         const existingUser=await User.findOne({username});
         if(!existingUser)
         {
-            res.status(400).json({message:"invalid credentials"});
+           return res.status(400).json({message:"invalid credentials"});
         }
-        await bcrypt.compare(password,existingUser.password,(err,data)=>{
-            if(data)
+        console.log("Login request for:", username);
+        console.log("Existing user:", existingUser);
+        console.log("Password input:", password);
+        console.log("Stored hash:", existingUser.password);
+       // await bcrypt.compare(password,existingUser.password,(err,data)=>{
+       //     if(data)
+            const isMatch =await bcrypt.compare(password,existingUser.password);
+             if(isMatch)
             {
-                const authClaims=[
+               {/*  const authClaims=[
                     {name:existingUser.username},
                     {role:existingUser.role},
-                ];
+                ]; */}
+
                // const token=jwt.sign({authClaims},"bookstore123",{expiresIn:"30d"});
-               const token = jwt.sign({ userId: existingUser._id, role: existingUser.role }, "bookstore123", { expiresIn: "1h" });
+               const token = jwt.sign({ userId: existingUser._id, role: existingUser.role }, "bookstore123", { expiresIn: "12h" });
                const refreshToken = jwt.sign({ userId: existingUser._id, role: existingUser.role }, "bookstore_refresh_secret", { expiresIn: "7d" });
                // Set refresh token in http-only cookie
-               res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true, maxAge: 7 * 24 * 60 * 60 * 1000 }); // Secure cookie
-               res.status(200).json({id:existingUser._id,
-                    role:existingUser.role,
-                    token:token,
-
-                });
+               res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 }); // Secure cookie
+               res.status(200).json({id:existingUser._id,role:existingUser.role, token:token,});
             }
-            else{
+            else
+            {
                 res.status(400).json({message:"invalid credentials"});
             }
-        })
-
-       
-
-    }catch(error){
-        res.status(500).json({message:"internal server error"});
+        }catch(error){
+        res.status(500).json({message:"password comparison failed"});
         throw error;
     }
 });
@@ -126,13 +127,13 @@ router.post("/refresh-token", (req, res) => {
 
 router.get("/get-user-information",authenticateToken,async(req,res)=>{
     try{
-        const { id }=req.headers;
+        const  id =req.user.userId;
         const data=await User.findById(id).select("-password");
         return res.status(200).json(data);
     }
     catch(error)
     {
-        res.status(400).json({message:"internal server error"});
+        res.status(500).json({message:"internal server error"});
     }
 });
 
@@ -140,7 +141,7 @@ router.get("/get-user-information",authenticateToken,async(req,res)=>{
 
 router.put("/update-address",authenticateToken,async(req,res)=>{
     try{
-        const{id}=req.headers;
+        const id=req.user.userId;
         const{address}=req.body;
         await User.findByIdAndUpdate(id,{address:address});
         return res.status(200).json({message:"address updated successfully"});

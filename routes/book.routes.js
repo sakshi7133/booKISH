@@ -130,7 +130,37 @@ const {authenticateToken}=require("../routes/userAuth.routes");
       }
   });
 
+  //searching book
 
+router.get("/search", async (req, res) => {
+  const { query } = req.query;
 
+    if (!query || query.trim() === "") {
+    return res.status(400).json({ message: "Query parameter is required" });
+  }
+  
+  try {
+    const main = await Book.findOne({
+        title: { $regex:`^${query}$`, $options: "i" } 
+         // case-insensitive match
+    });
 
-module.exports=router;
+    if(!main){
+      return res.status(404).json({message:"No book found with exact title"});
+    }
+
+    const others=await Book.find({
+      author:main.author,
+      _id: { $ne: main._id }
+    });
+
+     res.status(200).json({
+      mainBook: main,
+      otherBooks: others
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+module.exports = router;
