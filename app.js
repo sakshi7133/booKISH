@@ -33,11 +33,4 @@ app.listen(PORT,()=>{
     console.log(`server is listening on port ${PORT}`);
 });
 
-// mongoose.connect("mongodb+srv://admin:RnFgh1yUdvM2zaC6@cluster0.n5kiacm.mongodb.net/myDB?retryWrites=true&w=majority&appName=Cluster0")
-// .then(()=>console.log("connected to database")).then(()=>{
-//   app.listen(5000)
- // }).catch((err)=>console.log(err));
 
-
-//teJ7iToZGOkw9Ylmg
-//RnFgh1yUdvM2zaC6
